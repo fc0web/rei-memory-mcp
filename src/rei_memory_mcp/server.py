@@ -1,4 +1,4 @@
-"""FastMCP entry point for rei-memory-mcp.
+"""MCP entry point for rei-memory-mcp.
 
 Registers three read-only tools:
 - seed_search
@@ -13,13 +13,26 @@ from __future__ import annotations
 
 import os
 import sqlite3
+import sys
 from pathlib import Path
 
+from . import __version__
 from .db import open_db
 from .retrieve import get_theory, list_steps
 from .search import search
 
 DEFAULT_DB_PATH = "data/seed_kernel.db"
+
+INSTRUCTIONS = (
+    "Read-only Rei-AIOS SEED_KERNEL theory lookup. "
+    "Use seed_search(query, tier?, step_min?, step_max?, limit?) for FTS5 "
+    "trigram full-text over title+body (Japanese queries need 3+ chars). "
+    "Use seed_get(theory_id, include_links?) for the full body + link fan-out. "
+    "Use seed_list_steps(step_min?, step_max?) for per-STEP tier distribution "
+    "(only ~3% of theories carry STEP markers as of 2026-08-19). "
+    "tier must be one of: 'proven' / 'hypothesis' / 'speculative'. "
+    "Write, forget, and vector search are Phase 2+ (deliberately not exposed)."
+)
 
 
 def _resolve_db_path() -> Path:
@@ -37,16 +50,24 @@ def _get_conn() -> sqlite3.Connection:
 
 
 def build_server():  # pragma: no cover — thin wiring
-    """Construct the FastMCP server and register tools.
+    """Construct the MCP server and register tools.
 
-    Import is done lazily so tests that don't need MCP can import the
-    other modules without ``mcp`` being installed.
+    Returns None if the ``mcp`` package is not installed, letting the
+    caller print an instructive error instead of raising ImportError
+    at import time (which would break `python -c 'import rei_memory_mcp'`).
     """
-    from mcp.server.fastmcp import FastMCP
+    try:
+        from mcp.server import MCPServer  # type: ignore
+    except ImportError:
+        return None
 
-    mcp = FastMCP("rei-memory-mcp")
+    server = MCPServer(
+        name="rei-memory",
+        version=__version__,
+        instructions=INSTRUCTIONS,
+    )
 
-    @mcp.tool()
+    @server.tool()
     def seed_search(
         query: str,
         tier: str | None = None,
@@ -72,7 +93,7 @@ def build_server():  # pragma: no cover — thin wiring
         finally:
             conn.close()
 
-    @mcp.tool()
+    @server.tool()
     def seed_get(theory_id: str, include_links: bool = True) -> dict:
         """Fetch full theory body and its link fan-out.
 
@@ -85,7 +106,7 @@ def build_server():  # pragma: no cover — thin wiring
         finally:
             conn.close()
 
-    @mcp.tool()
+    @server.tool()
     def seed_list_steps(
         step_min: int | None = None,
         step_max: int | None = None,
@@ -103,14 +124,25 @@ def build_server():  # pragma: no cover — thin wiring
         finally:
             conn.close()
 
-    return mcp
+    return server
 
 
-def main() -> None:  # pragma: no cover — entry point
-    """Console-script entry: run the stdio MCP server."""
+def main() -> int:  # pragma: no cover — entry point
+    """Console-script entry: run the stdio MCP server.
+
+    Returns 1 with a helpful message if the ``mcp`` package is missing.
+    """
     server = build_server()
+    if server is None:
+        print(
+            "rei-memory-mcp: 'mcp' package not installed. "
+            "Run: pip install mcp",
+            file=sys.stderr,
+        )
+        return 1
     server.run()
+    return 0
 
 
 if __name__ == "__main__":  # pragma: no cover
-    main()
+    sys.exit(main())
