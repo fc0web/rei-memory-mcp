@@ -1,0 +1,121 @@
+# Rei-AIOS — Dual License
+# デュアルライセンス
+
+Copyright (C) 2024-2026 Nobuki Fujimoto (藤本 伸樹)
+D-FUMT Research / Rei-AIOS Project
+
+---
+
+## License Structure / ライセンス構成
+
+This software is dual-licensed:
+本ソフトウェアはデュアルライセンスです：
+
+### 1. AGPL-3.0 (Non-Commercial / Academic / Personal)
+
+For personal use, academic research, and non-commercial purposes,
+this software is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
+
+個人利用・学術研究・非商用目的の場合、
+本ソフトウェアは **GNU Affero General Public License v3.0 (AGPL-3.0)** の下で利用可能です。
+
+**Under AGPL-3.0, you may:**
+- View, read, and study the source code
+- Run the software for personal/academic use
+- Modify and create derivative works
+- Redistribute under the same AGPL-3.0 license
+
+**AGPL-3.0 requires:**
+- If you modify and deploy as a network service, you MUST publish your modified source code
+- All derivative works must also be AGPL-3.0
+- Copyright notices must be preserved
+
+**AGPL-3.0の下で可能なこと：**
+- ソースコードの閲覧・学習
+- 個人・学術目的での実行
+- 改変・二次的著作物の作成
+- 同一ライセンス（AGPL-3.0）での再配布
+
+**AGPL-3.0が要求すること：**
+- 改変してネットワークサービスとして提供する場合、改変ソースコードの公開義務
+- 二次的著作物も全てAGPL-3.0
+- 著作権表示の保持
+
+Full text: https://www.gnu.org/licenses/agpl-3.0.html
+
+---
+
+### 2. Commercial License (商用ライセンス)
+
+For commercial use — including but not limited to:
+- Providing Rei-AIOS functionality as a paid service (SaaS/API)
+- Integrating into proprietary products without source code disclosure
+- Enterprise deployment with SLA guarantees
+
+A separate **Commercial License** is required.
+
+商用利用（以下を含むが限定されない）の場合：
+- Rei-AIOS機能を有料サービス（SaaS/API）として提供
+- ソースコード非公開の独自製品への統合
+- SLA保証付きのエンタープライズ導入
+
+別途 **商用ライセンス** の契約が必要です。
+
+**Contact / お問い合わせ：**
+- GitHub: https://github.com/fc0web/rei-aios/issues
+- note.com: https://note.com/nifty_godwit2635
+- Email: fc2webb@gmail.com
+- ORCID: 0009-0004-6019-9258
+
+---
+
+## SEED_KERNEL Theories / 理論
+
+The SEED_KERNEL theories (axioms, formulas, and their descriptions) are
+additionally available under **CC BY-NC-SA 4.0** for academic citation and research.
+
+SEED_KERNEL理論（公理、数式、その記述）は、学術引用・研究目的に限り
+**CC BY-NC-SA 4.0** でも利用可能です。
+
+- BY: Credit Nobuki Fujimoto / 藤本伸樹のクレジット必須
+- NC: Non-commercial only / 非商用のみ
+- SA: Share-alike / 同一ライセンスで共有
+
+---
+
+## Zenodo Publications / 論文
+
+All Zenodo-published papers are timestamped with DOI,
+providing irrefutable proof of priority.
+
+Zenodoで公開された全論文はDOI付きタイムスタンプにより、
+先行性の反論不可能な証明を持ちます。
+
+---
+
+## Disclaimer / 免責事項
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE
+FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM THE USE OF
+THE SOFTWARE.
+
+本ソフトウェアは「現状のまま」提供されます。
+著作権者は、本ソフトウェアの使用から生じるいかなる請求・損害についても
+責任を負いません。
+
+---
+
+## Peace Axiom #196
+
+This software operates under the immutable Peace Axiom.
+All computation respects the fundamental axiom of peace. 🌳
+
+本ソフトウェアは不変の平和公理の下で動作します。
+すべての計算は平和の基本公理を尊重します。🌳
+
+---
+
+Copyright (C) 2024-2026 Nobuki Fujimoto (藤本 伸樹)
+All Rights Reserved except as expressly granted above.
+上記で明示的に許諾された場合を除き、全著作権所有。

@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+dist/
+build/
+
+# SQLite databases — never commit
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+
+# Local dumps (regenerated from SEED_KERNEL)
+data/*.jsonl
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store

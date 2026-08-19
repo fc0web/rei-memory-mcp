@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rei-memory-mcp"
+version = "0.1.0a1"
+description = "Read-only MCP server for SEED_KERNEL theory lookup (Phase 1: seed_search / seed_get / seed_list_steps)"
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.11"
+license = "AGPL-3.0-or-later"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Nobuki Fujimoto" },
+]
+keywords = [
+    "mcp",
+    "model-context-protocol",
+    "seed-kernel",
+    "memory",
+    "sqlite",
+    "fts5",
+    "rei-aios",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Natural Language :: Japanese",
+    "Natural Language :: English",
+]
+dependencies = [
+    "mcp>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+]
+
+[project.scripts]
+rei-memory-mcp = "rei_memory_mcp.server:main"
+
+[project.urls]
+Homepage = "https://github.com/fc0web/rei-memory-mcp"
+Repository = "https://github.com/fc0web/rei-memory-mcp"
+Issues = "https://github.com/fc0web/rei-memory-mcp/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
