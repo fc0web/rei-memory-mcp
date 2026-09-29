@@ -21,6 +21,7 @@ worse than a loud failure.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sqlite3
 import sys
@@ -99,6 +100,13 @@ def validate_row(row: dict, lineno: int) -> None:
             f"line {lineno} (id={_id!r}): immutable must be 0, 1, true, or false"
         )
 
+    body_sha256 = row.get("body_sha256")
+    if body_sha256 is not None:
+        if not isinstance(body_sha256, str) or len(body_sha256) != 64:
+            raise IngestError(
+                f"line {lineno} (id={_id!r}): body_sha256 must be a 64-char hex string or omitted"
+            )
+
 
 def _existing_immutable(conn: sqlite3.Connection, theory_id: str) -> bool:
     r = conn.execute(
@@ -129,9 +137,20 @@ def _upsert(conn: sqlite3.Connection, row: dict, stats: IngestStats) -> None:
             f"id={theory_id!r} is marked immutable in DB and cannot be overwritten"
         )
 
-    exists = conn.execute(
-        "SELECT 1 FROM theories WHERE id = ?", (theory_id,)
-    ).fetchone() is not None
+    existing = conn.execute(
+        "SELECT body, updated_at FROM theories WHERE id = ?", (theory_id,)
+    ).fetchone()
+    exists = existing is not None
+
+    # Preserve updated_at when body has not changed since last ingest.
+    # If the dump supplies body_sha256 and it matches sha256(existing_body),
+    # discard the incoming updated_at so MAX(updated_at) reflects the actual
+    # last content change rather than the dump generation time.
+    if exists and isinstance(row.get("body_sha256"), str):
+        existing_sha = hashlib.sha256(existing["body"].encode("utf-8")).hexdigest()
+        if existing_sha == row["body_sha256"]:
+            row = dict(row)
+            row["updated_at"] = existing["updated_at"]
 
     immutable_int = 1 if row.get("immutable") in (1, True) else 0
     payload = (
